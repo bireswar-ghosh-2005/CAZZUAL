@@ -21,7 +21,7 @@ app.use(express.json());
 mongoose
   .connect(process.env.MONGO_URL)
   .then(() => console.log("✅ MongoDB connected"))
-  .catch((err) => console.error("❌ MongoDB error:", err));
+  .catch((err) => console.error("❌ MongoDB error:", err.message));
 
 /* ======================
    PROJECT SCHEMA
@@ -50,10 +50,8 @@ const Project = mongoose.model("Project", projectSchema);
 ====================== */
 function verifyToken(req, res, next) {
   const authHeader = req.headers.authorization;
-
-  if (!authHeader) {
+  if (!authHeader)
     return res.status(401).json({ error: "No token provided" });
-  }
 
   const token = authHeader.split(" ")[1];
 
@@ -66,7 +64,7 @@ function verifyToken(req, res, next) {
 }
 
 /* ======================
-   EMAIL CONFIG
+   EMAIL CONFIG (IMPORTANT)
 ====================== */
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -76,36 +74,53 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+/* VERIFY MAIL CONFIG ON START */
+transporter.verify((err) => {
+  if (err) {
+    console.error("❌ Mail config error:", err.message);
+  } else {
+    console.log("📧 Mail server ready");
+  }
+});
+
+/* EMAIL SENDER WITH LOGGING */
 async function sendMail(to, subject, text) {
-  await transporter.sendMail({
-    from: process.env.MAIL_FROM,
-    to,
-    subject,
-    text,
-  });
+  try {
+    const info = await transporter.sendMail({
+      from: process.env.MAIL_FROM,
+      to,
+      subject,
+      text,
+    });
+
+    console.log("📧 Email sent:", info.response);
+  } catch (err) {
+    console.error("❌ Email failed:", err.message);
+  }
 }
 
 /* ======================
    ROUTES
 ====================== */
 
-/* 🔓 Health Check */
+/* HEALTH CHECK */
 app.get("/", (req, res) => {
   res.send("Backend running 🚀");
 });
 
-/* 🔓 Submit Project */
+/* SUBMIT PROJECT (PUBLIC) */
 app.post("/api/projects", async (req, res) => {
   try {
     const project = new Project(req.body);
     await project.save();
     res.json({ message: "Project submitted" });
-  } catch {
+  } catch (err) {
+    console.error(err.message);
     res.status(500).json({ error: "Submission failed" });
   }
 });
 
-/* 🔐 Admin Login */
+/* ADMIN LOGIN */
 app.post("/api/admin/login", (req, res) => {
   const { email, password } = req.body;
 
@@ -125,13 +140,13 @@ app.post("/api/admin/login", (req, res) => {
   res.json({ token });
 });
 
-/* 🔐 View All Projects */
+/* GET ALL PROJECTS (ADMIN) */
 app.get("/api/admin/projects", verifyToken, async (req, res) => {
   const projects = await Project.find().sort({ createdAt: -1 });
   res.json(projects);
 });
 
-/* ✅ ACCEPT PROJECT */
+/* ACCEPT PROJECT */
 app.post(
   "/api/admin/projects/:id/accept",
   verifyToken,
@@ -157,11 +172,11 @@ Regards,
 Cazzual Team`
     );
 
-    res.json({ message: "Project accepted & email sent" });
+    res.json({ message: "Project accepted & email attempted" });
   }
 );
 
-/* ❌ REJECT PROJECT */
+/* REJECT PROJECT */
 app.post(
   "/api/admin/projects/:id/reject",
   verifyToken,
@@ -189,7 +204,7 @@ Regards,
 Cazzual Team`
     );
 
-    res.json({ message: "Project rejected & email sent" });
+    res.json({ message: "Project rejected & email attempted" });
   }
 );
 
