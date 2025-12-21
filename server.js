@@ -15,10 +15,10 @@ app.use(express.json());
 mongoose
   .connect(process.env.MONGO_URL)
   .then(() => console.log("MongoDB connected"))
-  .catch(err => console.error(err));
+  .catch(err => console.error("Mongo error:", err));
 
 // =======================
-// Email (Resend)
+// Resend
 // =======================
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -47,9 +47,11 @@ app.post("/api/admin/login", (req, res) => {
     email === process.env.ADMIN_EMAIL &&
     password === process.env.ADMIN_PASSWORD
   ) {
-    const token = jwt.sign({ admin: true }, process.env.JWT_SECRET, {
-      expiresIn: "2h"
-    });
+    const token = jwt.sign(
+      { admin: true },
+      process.env.JWT_SECRET,
+      { expiresIn: "2h" }
+    );
     return res.json({ token });
   }
 
@@ -57,7 +59,7 @@ app.post("/api/admin/login", (req, res) => {
 });
 
 // =======================
-// Auth Middleware
+// Admin Auth
 // =======================
 function adminAuth(req, res, next) {
   const token = req.headers.authorization?.split(" ")[1];
@@ -78,25 +80,18 @@ app.post("/api/projects", async (req, res) => {
   try {
     console.log("BODY RECEIVED:", req.body);
 
-    const project = new Project({
-      name: req.body.name,
-      email: req.body.email,
-      title: req.body.title,
-      type: req.body.type,
-      description: req.body.description,
-      deadline: req.body.deadline
-    });
-
+    const project = new Project(req.body);
     await project.save();
+
     res.json({ message: "Project submitted successfully" });
   } catch (err) {
-    console.error(err);
+    console.error("Submit error:", err);
     res.status(500).json({ error: "Failed to submit project" });
   }
 });
 
 // =======================
-// Get All Projects (Admin)
+// Admin: Get Projects
 // =======================
 app.get("/api/admin/projects", adminAuth, async (req, res) => {
   const projects = await Project.find().sort({ _id: -1 });
@@ -107,53 +102,85 @@ app.get("/api/admin/projects", adminAuth, async (req, res) => {
 // Accept Project
 // =======================
 app.post("/api/admin/projects/:id/accept", adminAuth, async (req, res) => {
-  const project = await Project.findById(req.params.id);
-  if (!project) return res.status(404).json({ error: "Not found" });
+  try {
+    const project = await Project.findById(req.params.id);
+    if (!project) return res.status(404).json({ error: "Not found" });
 
-  project.status = "accepted";
-  await project.save();
+    project.status = "accepted";
+    await project.save();
 
-  await resend.emails.send({
-    from: process.env.MAIL_FROM,
-    to: project.email,
-    subject: "Your project has been accepted 🎉",
-    html: `
-      <h2>Hello ${project.name},</h2>
-      <p>Your project <b>${project.title}</b> has been <b>ACCEPTED</b>.</p>
-      <p>We will calculate pricing and contact you shortly.</p>
-      <br>
-      <p>– Cazzual Team</p>
-    `
-  });
+    const emailResult = await resend.emails.send({
+      from: "Cazzual <onboarding@resend.dev>",
+      to: project.email,
+      subject: "Your project has been accepted 🎉",
+      html: `
+        <h2>Hello ${project.name},</h2>
+        <p>Your project <b>${project.title}</b> has been <b>ACCEPTED</b>.</p>
+        <p>We will calculate pricing and contact you shortly.</p>
+        <br/>
+        <p>– Cazzual Team</p>
+      `
+    });
 
-  res.json({ message: "Project accepted & email sent" });
+    console.log("Resend ACCEPT result:", emailResult);
+
+    res.json({ message: "Project accepted & email sent" });
+  } catch (err) {
+    console.error("Accept email error:", err);
+    res.status(500).json({ error: "Accept failed" });
+  }
 });
 
 // =======================
 // Reject Project
 // =======================
 app.post("/api/admin/projects/:id/reject", adminAuth, async (req, res) => {
-  const project = await Project.findById(req.params.id);
-  if (!project) return res.status(404).json({ error: "Not found" });
+  try {
+    const project = await Project.findById(req.params.id);
+    if (!project) return res.status(404).json({ error: "Not found" });
 
-  project.status = "rejected";
-  await project.save();
+    project.status = "rejected";
+    await project.save();
 
-  await resend.emails.send({
-    from: process.env.MAIL_FROM,
-    to: project.email,
-    subject: "Regarding your project request",
-    html: `
-      <h2>Hello ${project.name},</h2>
-      <p>Thank you for submitting your project.</p>
-      <p>Unfortunately, we are unable to take this project at the moment.</p>
-      <p>We wish you the best.</p>
-      <br>
-      <p>– Cazzual Team</p>
-    `
-  });
+    const emailResult = await resend.emails.send({
+      from: "Cazzual <onboarding@resend.dev>",
+      to: project.email,
+      subject: "Regarding your project request",
+      html: `
+        <h2>Hello ${project.name},</h2>
+        <p>Thank you for submitting your project.</p>
+        <p>Unfortunately, we are unable to take this project at the moment.</p>
+        <br/>
+        <p>– Cazzual Team</p>
+      `
+    });
 
-  res.json({ message: "Project rejected & email sent" });
+    console.log("Resend REJECT result:", emailResult);
+
+    res.json({ message: "Project rejected & email sent" });
+  } catch (err) {
+    console.error("Reject email error:", err);
+    res.status(500).json({ error: "Reject failed" });
+  }
+});
+
+// =======================
+// Test Mail (IMPORTANT)
+// =======================
+app.get("/test-mail", async (req, res) => {
+  try {
+    const result = await resend.emails.send({
+      from: "Cazzual <onboarding@resend.dev>",
+      to: process.env.ADMIN_EMAIL,
+      subject: "Resend Test Email",
+      html: "<h2>Resend is working 🚀</h2>"
+    });
+
+    res.json({ success: true, result });
+  } catch (err) {
+    console.error("TEST MAIL ERROR:", err);
+    res.status(500).json({ error: err.message });
+  }
 });
 
 // =======================
