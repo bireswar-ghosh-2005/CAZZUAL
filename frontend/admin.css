@@ -1,0 +1,53 @@
+* {
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: #eef4fb;
+}
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  background: white;
+  padding: 25px;
+  width: 100%;
+  max-width: 600px;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+button {
+  padding: 10px;
+  background: #3b6ef3;
+  border: none;
+  color: white;
+  border-radius: 5px;
+}
+
+button.reject {
+  background: #e74c3c;
+  margin-left: 10px;
+}
+
+.project {
+  border-top: 1px solid #ddd;
+  padding: 15px 0;
+}
+
+.hidden {
+  display: none;
+}

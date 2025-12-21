@@ -1,0 +1,43 @@
+const form = document.getElementById("projectForm");
+const messageDiv = document.getElementById("message");
+
+// ✅ PUBLIC backend endpoint (NO TOKEN)
+const API_URL =
+  "https://project-backend-hybc.onrender.com/api/projects";
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const data = {
+    name: document.getElementById("name").value,
+    email: document.getElementById("email").value,
+    title: document.getElementById("title").value,
+    type: document.getElementById("type").value,
+    description: document.getElementById("description").value,
+    deadline: document.getElementById("deadline").value
+  };
+
+  try {
+    const res = await fetch(API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    });
+
+    const result = await res.json();
+
+    if (res.ok) {
+      messageDiv.innerHTML =
+        "<p style='color:green'>✅ Project submitted successfully!</p>";
+      form.reset();
+    } else {
+      messageDiv.innerHTML =
+        "<p style='color:red'>❌ Submission failed. Try again.</p>";
+    }
+  } catch (err) {
+    messageDiv.innerHTML =
+      "<p style='color:red'>❌ Server error. Please try later.</p>";
+  }
+});

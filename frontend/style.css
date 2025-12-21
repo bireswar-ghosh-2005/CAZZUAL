@@ -1,0 +1,147 @@
+* {
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background: #eef3fb;
+}
+
+/* LOGO MENU */
+.top-left {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  z-index: 1000;
+}
+
+.logo {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.dropdown {
+  display: none;
+  margin-top: 8px;
+  background: white;
+  border-radius: 6px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+  overflow: hidden;
+}
+
+.top-left:hover .dropdown {
+  display: block;
+}
+
+.dropdown a {
+  display: block;
+  padding: 10px 15px;
+  text-decoration: none;
+  color: #333;
+  font-size: 14px;
+}
+
+.dropdown a:hover {
+  background: #f0f0f0;
+}
+
+/* FORM CARD */
+.container {
+  max-width: 420px;
+  margin: 100px auto;
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+.subtitle {
+  text-align: center;
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+/* INPUTS */
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 12px;
+  margin-top: 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+textarea {
+  resize: vertical;
+}
+
+/* BUTTON */
+button {
+  width: 100%;
+  margin-top: 18px;
+  padding: 12px;
+  background: #4a6cf7;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button:hover {
+  background: #3b5be3;
+}
+
+button.loading {
+  background: black;
+  cursor: not-allowed;
+}
+
+/* SPINNER */
+.spinner {
+  display: none;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255,255,255,0.4);
+  border-top: 2px solid white;
+  border-radius: 50%;
+  margin-left: 10px;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* MESSAGES */
+.success {
+  color: green;
+  text-align: center;
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+.error {
+  color: red;
+  text-align: center;
+  margin-top: 15px;
+  font-weight: bold;
+}

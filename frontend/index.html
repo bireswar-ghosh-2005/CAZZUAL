@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cazzual – Request a Project</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- LOGO + DROPDOWN MENU -->
+  <div class="top-left">
+    <img src="logo.png" alt="Cazzual Logo" class="logo" />
+    <div class="dropdown">
+      <a href="founder.html">Founders</a>
+      <a href="others.html">Other Members</a>
+      <a href="terms.html">Terms & Conditions</a>
+    </div>
+  </div>
+
+  <!-- MAIN FORM -->
+  <div class="container">
+    <h1>Request a Project</h1>
+    <p class="subtitle">
+      Tell us what you want to build — we’ll take care of the rest
+    </p>
+
+    <form id="projectForm">
+
+      <input type="text" id="name" placeholder="Your Name" required />
+      <input type="email" id="email" placeholder="Your Email" required />
+      <input type="text" id="title" placeholder="Project Title" required />
+
+      <select id="type" required>
+        <option value="">Select Project Type</option>
+        <option>Model Making</option>
+        <option>Website / Apps</option>
+        <option>Handwritten</option>
+        <option>Typed</option>
+        <option>Others</option>
+      </select>
+
+      <textarea
+        id="description"
+        placeholder="Project Description (Optional)"
+        rows="4"
+      ></textarea>
+
+      <input type="date" id="deadline" required />
+
+      <button type="submit" id="submitBtn">
+        <span id="btnText">Submit Project</span>
+        <span class="spinner" id="spinner"></span>
+      </button>
+
+    </form>
+
+    <div id="message"></div>
+  </div>
+
+  <!-- SCRIPT -->
+  <script>
+    const form = document.getElementById("projectForm");
+    const messageDiv = document.getElementById("message");
+    const submitBtn = document.getElementById("submitBtn");
+    const btnText = document.getElementById("btnText");
+    const spinner = document.getElementById("spinner");
+
+    const API_URL = "https://project-backend-hybc.onrender.com/api/projects";
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      messageDiv.innerHTML = "";
+
+      // Button loading state
+      submitBtn.disabled = true;
+      submitBtn.classList.add("loading");
+      btnText.textContent = "Please wait...";
+      spinner.style.display = "inline-block";
+
+      const data = {
+        name: document.getElementById("name").value,
+        email: document.getElementById("email").value,
+        title: document.getElementById("title").value,
+        type: document.getElementById("type").value,
+        description: document.getElementById("description").value,
+        deadline: document.getElementById("deadline").value
+      };
+
+      try {
+        const res = await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
+        });
+
+        if (res.ok) {
+          messageDiv.innerHTML =
+            "<p class='success'>✅ Project submitted successfully!</p>";
+          form.reset();
+
+          setTimeout(() => {
+            messageDiv.innerHTML = "";
+          }, 2000);
+        } else {
+          messageDiv.innerHTML =
+            "<p class='error'>❌ Something went wrong. Try again.</p>";
+        }
+      } catch {
+        messageDiv.innerHTML =
+          "<p class='error'>❌ Server not reachable. Please try later.</p>";
+      }
+
+      // Restore button
+      submitBtn.disabled = false;
+      submitBtn.classList.remove("loading");
+      btnText.textContent = "Submit Project";
+      spinner.style.display = "none";
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin – Cazzual</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+
+<div class="page">
+
+  <div class="card" id="loginBox">
+    <h1>Admin Login</h1>
+    <input id="adminEmail" placeholder="Email" />
+    <input id="adminPassword" type="password" placeholder="Password" />
+    <button onclick="login()">Login</button>
+    <p id="loginMsg"></p>
+  </div>
+
+  <div class="card hidden" id="dashboard">
+    <h1>Projects</h1>
+    <div id="projects"></div>
+  </div>
+
+</div>
+
+<script>
+const API = "https://project-backend-hybc.onrender.com";
+let token = null;
+
+async function login() {
+  const res = await fetch(API + "/api/admin/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      email: adminEmail.value,
+      password: adminPassword.value
+    })
+  });
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    loginMsg.textContent = "Invalid login";
+    return;
+  }
+
+  token = data.token;
+  loginBox.classList.add("hidden");
+  dashboard.classList.remove("hidden");
+  loadProjects();
+}
+
+async function loadProjects() {
+  const res = await fetch(API + "/api/admin/projects", {
+    headers: { Authorization: "Bearer " + token }
+  });
+
+  const projects = await res.json();
+  const container = document.getElementById("projects");
+  container.innerHTML = "";
+
+  projects.forEach(p => {
+    const div = document.createElement("div");
+    div.className = "project";
+
+    div.innerHTML = `
+      <p><b>Name:</b> ${p.name || "MISSING"}</p>
+      <p><b>Email:</b> ${p.email}</p>
+      <p><b>Title:</b> ${p.title}</p>
+      <p><b>Status:</b> ${p.status}</p>
+      <button onclick="update('${p._id}','accept')">Accept</button>
+      <button class="reject" onclick="update('${p._id}','reject')">Reject</button>
+    `;
+
+    container.appendChild(div);
+  });
+}
+
+async function update(id, action) {
+  await fetch(`${API}/api/admin/projects/${id}/${action}`, {
+    method: "POST",
+    headers: { Authorization: "Bearer " + token }
+  });
+  loadProjects();
+}
+</script>
+
+</body>
+</html>
