@@ -1,46 +1,70 @@
+/* RESET */
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
-  font-family: "Segoe UI", Arial, sans-serif;
 }
 
-body {
-  margin: 0;
-  background: #f2f6fb;
+/* BODY – IMPORTANT: NO FLEX, NO FIXED HEIGHT */
+html, body {
+  width: 100%;
+  height: auto;
+  overflow-x: hidden;
+  font-family: Arial, sans-serif;
 }
 
 /* LOGO */
-.logo {
+.top-logo {
   position: fixed;
   top: 20px;
   left: 20px;
-  z-index: 10;
+  z-index: 100;
 }
 
-.logo img {
+.top-logo img {
   width: 60px;
   height: 60px;
   border-radius: 50%;
 }
 
-/* MAIN LAYOUT */
-.layout {
-  display: flex;
-  min-height: 100vh;
-  padding: 60px 40px;
-  gap: 30px;
-  align-items: center;
+/* HERO SECTIONS */
+.hero {
+  min-height: 100vh;              /* 🔑 critical */
+  width: 100%;
+  display: block;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center top;
 }
 
-/* SIDE CLICKABLE CARDS */
+.hero1 {
+  background-image: url("./hero1.jpg");
+}
+
+.hero2 {
+  background-image: url("./hero2.jpg");
+}
+
+/* MAIN SECTION (AFTER HEROES) */
+.main-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 80px 40px;
+  gap: 30px;
+  background: #eef2f8;
+}
+
+/* SIDE IMAGES */
 .side-card {
   flex: 1;
   height: 75vh;
-  border-radius: 18px;
-  position: relative;
+  border-radius: 20px;
   background-size: cover;
   background-position: center;
+  position: relative;
   text-decoration: none;
-  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .side-card:hover {
@@ -48,58 +72,57 @@ body {
   box-shadow: 0 25px 45px rgba(0,0,0,0.3);
 }
 
-/* BACKGROUND IMAGES */
 .left-card {
-  background-image: url("left.jpg");
+  background-image: url("./left.jpg");
 }
 
 .right-card {
-  background-image: url("right.jpg");
+  background-image: url("./right.jpg");
 }
 
-/* OVERLAY TEXT */
+/* CLICKABLE TEXT */
 .overlay-text {
   position: absolute;
   bottom: 30px;
   left: 50%;
   transform: translateX(-50%);
-  background: rgba(0,0,0,0.65);
+  background: rgba(0,0,0,0.7);
   color: white;
   padding: 14px 28px;
   border-radius: 40px;
   font-size: 22px;
-  font-weight: 700;
+  font-weight: bold;
   letter-spacing: 2px;
+  cursor: pointer;
 }
 
 /* FORM */
-.form-container {
+.form-box {
   width: 420px;
   background: white;
   padding: 30px;
-  border-radius: 16px;
-  box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+  border-radius: 18px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.15);
 }
 
-.form-container h1 {
-  margin: 0 0 10px;
+.form-box h1 {
   text-align: center;
+  margin-bottom: 8px;
 }
 
 .subtitle {
   text-align: center;
   font-size: 14px;
-  margin-bottom: 20px;
   color: #555;
+  margin-bottom: 20px;
 }
 
-input, textarea, select {
+input, select, textarea {
   width: 100%;
   padding: 12px;
   margin-top: 12px;
   border-radius: 8px;
   border: 1px solid #ccc;
-  font-size: 14px;
 }
 
 textarea {
@@ -107,8 +130,8 @@ textarea {
 }
 
 button {
-  margin-top: 18px;
   width: 100%;
+  margin-top: 18px;
   padding: 14px;
   background: #4f6ef7;
   color: white;
@@ -116,29 +139,16 @@ button {
   border-radius: 10px;
   font-size: 16px;
   cursor: pointer;
-  transition: background 0.25s ease, transform 0.15s ease;
 }
 
 button:hover {
-  background: #3c56d9;
-}
-
-button:active {
-  transform: scale(0.97);
-}
-
-/* MESSAGE */
-#message {
-  margin-top: 15px;
-  text-align: center;
-  font-weight: bold;
+  background: #3d56d8;
 }
 
 /* RESPONSIVE */
 @media (max-width: 900px) {
-  .layout {
+  .main-section {
     flex-direction: column;
-    padding: 40px 20px;
   }
 
   .side-card {
@@ -146,7 +156,7 @@ button:active {
     height: 40vh;
   }
 
-  .form-container {
+  .form-box {
     width: 100%;
   }
 }
