@@ -46,7 +46,8 @@ body {
 .hero {
   height: 100vh;
   background-size: cover;
-  background-position: center;
+  background-position: top center;
+	background-repeat: no-repeat;
   display: flex;
   align-items: center;
   justify-content: center;
