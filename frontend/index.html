@@ -9,30 +9,30 @@
 
 <body>
 
-  <!-- LEFT CLICKABLE IMAGE -->
-  <a href="ecofriendly.html" class="side-image left">
-    <span>ECO-FRIENDLY</span>
-  </a>
+  <!-- LOGO -->
+  <div class="logo">
+    <img src="logo.png" alt="Cazzual Logo">
+  </div>
 
-  <!-- RIGHT CLICKABLE IMAGE -->
-  <a href="workwithus.html" class="side-image right">
-    <span>WORK WITH US</span>
-  </a>
+  <!-- MAIN LAYOUT -->
+  <div class="layout">
 
-  <!-- CENTER FORM -->
-  <main class="form-wrapper">
-    <div class="container">
+    <!-- LEFT CLICKABLE IMAGE -->
+    <a href="ecofriendly.html" class="side-card left-card">
+      <span class="overlay-text">ECO-FRIENDLY</span>
+    </a>
+
+    <!-- CENTER FORM -->
+    <div class="form-container">
       <h1>Request a Project</h1>
-      <p class="subtitle">
-        Tell us what you want to build — we’ll take care of the rest
-      </p>
+      <p class="subtitle">Tell us what you want to build — we’ll take care of the rest</p>
 
       <form id="projectForm">
-        <input type="text" placeholder="Your Name" required />
-        <input type="email" placeholder="Your Email" required />
-        <input type="text" placeholder="Project Title" required />
+        <input type="text" id="name" placeholder="Your Name" required />
+        <input type="email" id="email" placeholder="Your Email" required />
+        <input type="text" id="title" placeholder="Project Title" required />
 
-        <select required>
+        <select id="type" required>
           <option value="">Select Project Type</option>
           <option>Model Making</option>
           <option>Website / Apps</option>
@@ -41,20 +41,23 @@
           <option>Others</option>
         </select>
 
-        <textarea
-          placeholder="Project Description (Optional)"
-          rows="4"
-        ></textarea>
+        <textarea id="description" placeholder="Project Description (Optional)"></textarea>
 
-        <input type="date" required />
+        <input type="date" id="deadline" required />
 
         <button type="submit">Submit Project</button>
-
-        <div id="message"></div>
       </form>
-    </div>
-  </main>
 
+      <div id="message"></div>
+    </div>
+
+    <!-- RIGHT CLICKABLE IMAGE -->
+    <a href="workwithus.html" class="side-card right-card">
+      <span class="overlay-text">WORK WITH US</span>
+    </a>
+
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
-
