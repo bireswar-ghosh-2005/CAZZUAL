@@ -27,6 +27,14 @@ html, body {
   border-radius: 50%;
 }
 
+.top-logo a {
+  display: inline-block;
+}
+
+.top-logo img {
+  cursor: pointer;
+}
+
 /* HERO SECTIONS */
 .hero {
   min-height: 100vh;              /* 🔑 critical */
