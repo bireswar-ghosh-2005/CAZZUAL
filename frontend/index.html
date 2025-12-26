@@ -76,16 +76,6 @@
 
   </section>
 
-<script>
-  // Show selected stickers if available
-  const stickerPreview = document.getElementById("stickerPreview");
-  const selectedStickers = JSON.parse(localStorage.getItem("selectedStickers"));
-
-  if (selectedStickers && selectedStickers.length > 0) {
-    stickerPreview.innerText =
-      "Selected Stickers: " + selectedStickers.join(", ");
-  }
-</script>
  <script src="script.js"></script>
 </body>
 </html>
