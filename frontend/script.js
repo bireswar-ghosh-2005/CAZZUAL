@@ -41,3 +41,11 @@ form.addEventListener("submit", async (e) => {
       "<p style='color:red'>❌ Server error. Please try later.</p>";
   }
 });
+// Load selected stickers (if any) when index page loads
+document.addEventListener("DOMContentLoaded", () => {
+  const stickers = JSON.parse(localStorage.getItem("selectedStickers") || "[]");
+  const input = document.getElementById("stickersInput");
+  if (input) {
+    input.value = stickers.join(",");
+  }
+});

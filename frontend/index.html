@@ -58,19 +58,12 @@
         <input type="date" required />
 
 
-<!-- OPTIONAL STICKER SECTION -->
-<div class="sticker-section">
+<!-- 🔥 ADD THIS PART HERE 🔥 -->
+  <a href="sticker.html" class="sticker-link">
+    🎁 Select Stickers (Optional)
+  </a>
 
-  <button
-    type="button"
-    class="sticker-btn"
-    onclick="window.location.href='sticker.html'"
-  >
-    Choose Stickers (Optional)
-  </button>
-
-  <p id="stickerPreview" class="sticker-preview"></p>
-</div>
+  <input type="hidden" id="stickersInput" name="stickers">
 
         <button type="submit">Submit Project</button>
       </form>
@@ -93,6 +86,6 @@
       "Selected Stickers: " + selectedStickers.join(", ");
   }
 </script>
-
+ <script src="script.js"></script>
 </body>
 </html>
