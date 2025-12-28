@@ -189,6 +189,32 @@ button:hover {
 
 
 
+
+
+.form-message {
+  margin-top: 12px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.form-message.loading {
+  color: black;
+}
+
+.form-message.success {
+  color: green;
+  font-weight: 600;
+}
+
+.submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+
+
+
+
 /* RESPONSIVE */
 @media (max-width: 900px) {
   .main-section {
