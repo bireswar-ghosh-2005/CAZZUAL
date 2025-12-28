@@ -230,3 +230,82 @@ button:hover {
     width: 100%;
   }
 }
+
+
+/* existing styles remain untouched */
+
+.form-message {
+  margin-top: 10px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.form-message.loading {
+  color: black;
+}
+
+.form-message.success {
+  color: green;
+  font-weight: 600;
+}
+
+.submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Sticker button */
+.sticker-btn {
+  background: #ff6fae;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  font-size: 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: auto;
+}
+
+.sticker-btn:hover {
+  background: #ff4d9a;
+}/* existing styles remain untouched */
+
+.form-message {
+  margin-top: 10px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.form-message.loading {
+  color: black;
+}
+
+.form-message.success {
+  color: green;
+  font-weight: 600;
+}
+
+.submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Sticker button */
+.sticker-btn {
+  background: #ff6fae;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  font-size: 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: auto;
+}
+
+.sticker-btn:hover {
+  background: #ff4d9a;
+}

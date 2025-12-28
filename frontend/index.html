@@ -22,10 +22,8 @@
   </div>
 </div>
 
-<!-- HERO SECTION 1 -->
+<!-- HERO SECTIONS -->
 <section class="hero hero1"></section>
-
-<!-- HERO SECTION 2 -->
 <section class="hero hero2"></section>
 
 <!-- MAIN CONTENT -->
@@ -43,29 +41,9 @@
 
     <form id="projectForm">
 
-      <input
-        type="text"
-        id="name"
-        name="name"
-        placeholder="Your Name"
-        required
-      />
-
-      <input
-        type="email"
-        id="email"
-        name="email"
-        placeholder="Your Email"
-        required
-      />
-
-      <input
-        type="text"
-        id="title"
-        name="title"
-        placeholder="Project Title"
-        required
-      />
+      <input type="text" id="name" name="name" placeholder="Your Name" required />
+      <input type="email" id="email" name="email" placeholder="Your Email" required />
+      <input type="text" id="title" name="title" placeholder="Project Title" required />
 
       <select id="type" name="type" required>
         <option value="">Select Project Type</option>
@@ -82,28 +60,21 @@
         placeholder="Project Description (Optional)">
       </textarea>
 
-      <input
-        type="date"
-        id="deadline"
-        name="deadline"
-        required
-      />
+      <input type="date" id="deadline" name="deadline" required />
 
       <!-- STICKER BUTTON -->
-      <button
-        type="button"
-        id="stickerBtn"
-        class="sticker-btn">
+      <button type="button" id="stickerBtn" class="sticker-btn">
         🎁 Select Stickers (Optional)
       </button>
 
       <input type="hidden" id="stickersInput" name="stickers">
 
-<button type="submit" class="submit-btn" id="submitBtn">
-  Submit Project
-</button>
+      <!-- SUBMIT -->
+      <button type="submit" class="submit-btn" id="submitBtn">
+        Submit Project
+      </button>
 
-<p id="formMessage" class="form-message"></p>
+      <p id="formMessage" class="form-message"></p>
 
     </form>
   </div>
@@ -115,8 +86,6 @@
 
 </section>
 
-<!-- MAIN SCRIPT -->
 <script src="script.js"></script>
-
 </body>
 </html>
