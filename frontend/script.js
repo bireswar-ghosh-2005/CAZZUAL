@@ -17,11 +17,42 @@ document.addEventListener("DOMContentLoaded", () => {
     stickersInput.value = selectedStickers.join(",");
   }
 
+
+// Restore form data if returning from sticker page
+const savedFormData = JSON.parse(
+  localStorage.getItem("projectFormData") || "null"
+);
+
+if (savedFormData) {
+  document.getElementById("name").value = savedFormData.name || "";
+  document.getElementById("email").value = savedFormData.email || "";
+  document.getElementById("title").value = savedFormData.title || "";
+  document.getElementById("type").value = savedFormData.type || "";
+  document.getElementById("description").value = savedFormData.description || "";
+  document.getElementById("deadline").value = savedFormData.deadline || "";
+}
+
+
+
   // Sticker button click
-  stickerBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    window.location.href = "sticker.html";
-  });
+stickerBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  // Save current form data before leaving
+  const formData = {
+    name: document.getElementById("name").value,
+    email: document.getElementById("email").value,
+    title: document.getElementById("title").value,
+    type: document.getElementById("type").value,
+    description: document.getElementById("description").value,
+    deadline: document.getElementById("deadline").value
+  };
+
+  localStorage.setItem("projectFormData", JSON.stringify(formData));
+
+  window.location.href = "sticker.html";
+});
+
 
   // Submit handler
   form.addEventListener("submit", async (e) => {
@@ -57,6 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       form.reset();
       localStorage.removeItem("selectedStickers");
+	localStorage.removeItem("projectFormData");
 
       setTimeout(() => {
         message.innerText = "";
