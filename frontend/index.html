@@ -21,61 +21,100 @@
     <a href="terms.html">Terms & Conditions</a>
   </div>
 </div>
-  <!-- HERO 1 -->
-  <section class="hero hero1"></section>
 
-  <!-- HERO 2 -->
-  <section class="hero hero2"></section>
+<!-- HERO SECTION 1 -->
+<section class="hero hero1"></section>
 
-  <!-- MAIN CONTENT -->
-  <section class="main-section">
+<!-- HERO SECTION 2 -->
+<section class="hero hero2"></section>
 
-    <!-- LEFT IMAGE -->
-    <a href="ecofriendly.html" class="side-card left-card">
-      <span class="overlay-text">ECO-FRIENDLY</span>
-    </a>
+<!-- MAIN CONTENT -->
+<section class="main-section">
 
-    <!-- FORM -->
-    <div class="form-box">
-      <h1>Request a Project</h1>
-      <p class="subtitle">Tell us what you want — we’ll handle the rest</p>
+  <!-- LEFT IMAGE -->
+  <a href="ecofriendly.html" class="side-card left-card">
+    <span class="overlay-text">ECO-FRIENDLY</span>
+  </a>
 
-      <form>
-        <input type="text" placeholder="Your Name" required />
-        <input type="email" placeholder="Your Email" required />
-        <input type="text" placeholder="Project Title" required />
+  <!-- FORM -->
+  <div class="form-box">
+    <h1>Request a Project</h1>
+    <p class="subtitle">Tell us what you want — we’ll handle the rest</p>
 
-        <select required>
-          <option value="">Select Project Type</option>
-          <option>Model Making</option>
-          <option>Website / Apps</option>
-          <option>Handwritten</option>
-          <option>Typed</option>
-          <option>Others</option>
-        </select>
+    <form id="projectForm">
 
-        <textarea placeholder="Project Description (Optional)"></textarea>
-        <input type="date" required />
+      <input
+        type="text"
+        id="name"
+        name="name"
+        placeholder="Your Name"
+        required
+      />
 
+      <input
+        type="email"
+        id="email"
+        name="email"
+        placeholder="Your Email"
+        required
+      />
 
-<!-- Sticker selection button -->
-<button type="button" id="stickerBtn" class="sticker-btn">
-  🎁 Select Stickers (Optional)
-</button>
+      <input
+        type="text"
+        id="title"
+        name="title"
+        placeholder="Project Title"
+        required
+      />
 
-<input type="hidden" id="stickersInput" name="stickers">
+      <select id="type" name="type" required>
+        <option value="">Select Project Type</option>
+        <option>Model Making</option>
+        <option>Website / Apps</option>
+        <option>Handwritten</option>
+        <option>Typed</option>
+        <option>Others</option>
+      </select>
 
-        <button type="submit">Submit Project</button>
-      </form>
-    </div>
+      <textarea
+        id="description"
+        name="description"
+        placeholder="Project Description (Optional)">
+      </textarea>
 
-    <!-- RIGHT IMAGE -->
-    <a href="workwithus.html" class="side-card right-card">
-      <span class="overlay-text">WORK WITH US</span>
-    </a>
+      <input
+        type="date"
+        id="deadline"
+        name="deadline"
+        required
+      />
 
-  </section>
+      <!-- STICKER BUTTON -->
+      <button
+        type="button"
+        id="stickerBtn"
+        class="sticker-btn">
+        🎁 Select Stickers (Optional)
+      </button>
 
- <script src="script.js"></script>
+      <input type="hidden" id="stickersInput" name="stickers">
+
+      <button type="submit" class="submit-btn">
+        Submit Project
+      </button>
+
+    </form>
+  </div>
+
+  <!-- RIGHT IMAGE -->
+  <a href="workwithus.html" class="side-card right-card">
+    <span class="overlay-text">WORK WITH US</span>
+  </a>
+
+</section>
+
+<!-- MAIN SCRIPT -->
+<script src="script.js"></script>
+
 </body>
 </html>
